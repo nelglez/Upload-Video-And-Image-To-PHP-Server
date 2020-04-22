@@ -9,11 +9,13 @@
 import UIKit
 import AVFoundation
 
-class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, URLSessionDelegate {
+class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, URLSessionDelegate, URLSessionTaskDelegate, URLSessionDataDelegate {
     @IBOutlet var imageView: UIImageView!
     @IBOutlet var pickImageButton: UIButton!
     @IBOutlet var pickVideoButton: UIButton!
- 
+    @IBOutlet var progressBar: UIProgressView!
+    @IBOutlet var progressLabel: UILabel!
+    
     var dataPath: URL?
     var myImage: UIImage?
     
@@ -201,24 +203,36 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         request.httpBody = body
         
         
-        let session = Foundation.URLSession.shared
+//        let session = Foundation.URLSession.shared
+//
+//        let task = session.dataTask(with: request as URLRequest) {
+//            (
+//            data, response, error) in
+//
+//            guard let _:NSData = data as NSData?, let _:URLResponse = response, error == nil else {
+//                print("error")
+//                return
+//            }
+//
+//            let dataString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)
+//            print(dataString as Any)
+//
+//            self.myImage = nil
+//
+//        }
+//
+//        task.resume()
         
-        let task = session.dataTask(with: request as URLRequest) {
-            (
-            data, response, error) in
-            
-            guard let _:NSData = data as NSData?, let _:URLResponse = response, error == nil else {
-                print("error")
-                return
+        let configuration = URLSessionConfiguration.default
+        let session = Foundation.URLSession(configuration: configuration, delegate: self, delegateQueue: OperationQueue.main)
+        let task = session.uploadTask(with: request as URLRequest, from: myImageData) { (data, _, error) in
+            if let error = error {
+                print(error.localizedDescription)
             }
             
-            let dataString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)
-            print(dataString as Any)
-            
-            self.myImage = nil
-            
-        }
-        
+            self.progressBar.progress = 0
+            self.progressLabel.text = "0%"
+        } //session.uploadTask(with: request as URLRequest, from: myImageData)
         task.resume()
         
         
@@ -332,6 +346,36 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         self.present(myPickerController, animated: true, completion: nil)
     }
     
+    
+    private func URLSession(session: URLSession, task: URLSessionTask, didCompleteWithError error: NSError?)
+    {
+    print("didCompleteWithError")
+        let myAlert = UIAlertController(title: "Error", message: error?.localizedDescription, preferredStyle: .alert)
+        let action = UIAlertAction(title: "OK", style: .default, handler: nil)
+        myAlert.addAction(action)
+        present(myAlert, animated: true, completion: nil)
+    
+   // self.uploadButton.enabled = true
+    }
+    func urlSession(_ session: URLSession, task: URLSessionTask, didSendBodyData bytesSent: Int64, totalBytesSent: Int64, totalBytesExpectedToSend: Int64)
+    {
+    print("didSendBodyData")
+        let uploadProgress:Float = Float(totalBytesSent) / Float(totalBytesExpectedToSend)
+    progressBar.progress = uploadProgress
+    let progressPercent = Int(uploadProgress*100)
+    progressLabel.text = "\(progressPercent)%"
+    print(uploadProgress)
+    }
+    func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive response: URLResponse, completionHandler: (URLSession.ResponseDisposition) -> Void)
+    {
+    print("didReceiveResponse")
+    print(response);
+ //   self.uploadButton.enabled = true
+    }
+    func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive data: Data)
+    {
+    print("didReceiveData")
+    }
     
     
 }

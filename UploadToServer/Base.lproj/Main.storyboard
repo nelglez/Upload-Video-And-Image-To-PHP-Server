@@ -22,7 +22,7 @@
                                 </constraints>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="32" translatesAutoresizingMaskIntoConstraints="NO" id="oBj-gp-Qvv">
-                                <rect key="frame" x="20" y="480" width="374" height="194"/>
+                                <rect key="frame" x="20" y="480" width="374" height="132"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k3O-VA-64u">
                                         <rect key="frame" x="0.0" y="0.0" width="374" height="50"/>
@@ -44,23 +44,6 @@
                                             <action selector="pickVideoButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="oy7-7o-PbS"/>
                                         </connections>
                                     </button>
-                                    <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="pD5-r0-3Mn">
-                                        <rect key="frame" x="0.0" y="164" width="374" height="30"/>
-                                        <subviews>
-                                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="7n4-bc-h9h">
-                                                <rect key="frame" x="0.0" y="14" width="337" height="2"/>
-                                            </progressView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0 %" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b1J-VD-sAO">
-                                                <rect key="frame" x="345" y="0.0" width="29" height="30"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="30" id="Fgk-bK-sE5"/>
-                                                </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                        </subviews>
-                                    </stackView>
                                 </subviews>
                             </stackView>
                         </subviews>
@@ -79,8 +62,6 @@
                         <outlet property="imageView" destination="HBU-u2-nob" id="M7U-SY-RpR"/>
                         <outlet property="pickImageButton" destination="k3O-VA-64u" id="8Yx-11-yF8"/>
                         <outlet property="pickVideoButton" destination="Y1n-mP-dgS" id="i0e-xh-IC5"/>
-                        <outlet property="progressBar" destination="7n4-bc-h9h" id="DhN-1l-biW"/>
-                        <outlet property="progressLabel" destination="b1J-VD-sAO" id="v45-8E-w67"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

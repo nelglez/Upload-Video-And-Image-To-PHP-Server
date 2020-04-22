@@ -13,8 +13,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     @IBOutlet var imageView: UIImageView!
     @IBOutlet var pickImageButton: UIButton!
     @IBOutlet var pickVideoButton: UIButton!
-    @IBOutlet var progressBar: UIProgressView!
-    @IBOutlet var progressLabel: UILabel!
+
     
     var dataPath: URL?
     var myImage: UIImage?
@@ -203,40 +202,47 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         request.httpBody = body
         
         
-//        let session = Foundation.URLSession.shared
-//
-//        let task = session.dataTask(with: request as URLRequest) {
-//            (
-//            data, response, error) in
-//
-//            guard let _:NSData = data as NSData?, let _:URLResponse = response, error == nil else {
-//                print("error")
-//                return
-//            }
-//
-//            let dataString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)
-//            print(dataString as Any)
-//
-//            self.myImage = nil
-//
-//        }
-//
-//        task.resume()
-        
-        let configuration = URLSessionConfiguration.default
-        let session = Foundation.URLSession(configuration: configuration, delegate: self, delegateQueue: OperationQueue.main)
-        let task = session.uploadTask(with: request as URLRequest, from: myImageData) { (data, _, error) in
-            if let error = error {
-                print(error.localizedDescription)
+        let session = Foundation.URLSession.shared
+
+        let task = session.dataTask(with: request as URLRequest) {
+            (
+            data, response, error) in
+
+            guard let _:NSData = data as NSData?, let _:URLResponse = response, error == nil else {
+                print("error")
+                return
             }
-            
-            self.progressBar.progress = 0
-            self.progressLabel.text = "0%"
-        } //session.uploadTask(with: request as URLRequest, from: myImageData)
+
+            let dataString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)
+            print(dataString as Any)
+
+            self.myImage = nil
+
+        }
+
         task.resume()
         
-        
-        
+//        let configuration = URLSessionConfiguration.default
+//        let session = Foundation.URLSession(configuration: configuration, delegate: self, delegateQueue: OperationQueue.main)
+//        let task = session.uploadTask(with: request as URLRequest, from: myImageData) { (data, response, error) in
+//            if let error = error {
+//                print(error.localizedDescription)
+//            }
+//             guard let _:NSData = data as NSData?, let _:URLResponse = response, error == nil else {
+//                            print("error")
+//                            return
+//                        }
+//
+//                        let dataString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)
+//                        print(dataString as Any)
+//
+//            self.progressBar.progress = 0
+//            self.progressLabel.text = "0%"
+//        } //session.uploadTask(with: request as URLRequest, from: myImageData)
+//        task.resume()
+//
+//
+//
         
     }
     func generateBoundaryString() -> String
@@ -345,7 +351,8 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         
         self.present(myPickerController, animated: true, completion: nil)
     }
-    
+
+    /*
     
     private func URLSession(session: URLSession, task: URLSessionTask, didCompleteWithError error: NSError?)
     {
@@ -376,7 +383,9 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     {
     print("didReceiveData")
     }
-    
+  
+ 
+ */
     
 }
 
